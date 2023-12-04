@@ -1,9 +1,10 @@
+package Library.MovieData;
 import java.io.*;
 import java.util.*;
 
 public class MovieDatabase {
     private List<Movie> movies;
-    private final String filePath = "./MovieDatabase.csv"; 
+    private final String filePath = "./Resources/MovieDatabase.csv"; 
     public MovieDatabase() {
         movies = new ArrayList<>();
         loadMoviesFromFile();

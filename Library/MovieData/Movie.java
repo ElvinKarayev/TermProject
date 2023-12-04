@@ -1,6 +1,6 @@
+package Library.MovieData;
 public class Movie{
 
-    //Attributes
 
     private String title="";
     private String director="";
@@ -8,23 +8,11 @@ public class Movie{
     private int runningTime;
 
 
-    //Constructors
-
     public Movie(String title, String director, int releaseYear, int runningTime){
         this.title = title;
         this.director = director;
         this.releaseYear = releaseYear;
         this.runningTime = runningTime;
-    }
-
-    public Movie(String title, int releaseYear, int runningTime){
-        this.title = title;
-        this.releaseYear = releaseYear;
-        this.runningTime = runningTime;
-    }
-
-    public Movie(String title){
-        this.title = title;
     }
 
     //Getters
