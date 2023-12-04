@@ -25,22 +25,74 @@ public class UserDataManagement{
             for (int i=0;i<splittedData.length;i++){
                 userData=splittedData[i].split(",");
                 HashMap<String,String> UserInfo=new HashMap<>();
-                UserInfo.put(userData[1], userData[2]);
+                UserInfo.put(userData[0], userData[1]);
 
-                allUsersData.addLast(UserInfo);
+                allUsersData.add(UserInfo);
             }
         } catch (IOException e) {
             System.out.println("Error:Couldn't read file");
-            e.printStackTrace();
-        } 
-        return allUsersData;
+            
+            
+        }
+        return allUsersData; 
         
     }  
-    public static void addUser(){
-        try (FileOutputStream a = new FileOutputStream("./Resources/UserDataBase.csv",true)) {
+    //will return the hashmap of the user if it is found otherwise it will throw exception
+    public static HashMap<String, String> getUser(String username) {
+        LinkedList<HashMap<String, String>> allUsersData = LoadFile();
+
+        for (HashMap<String, String> user : allUsersData) {
+            if (user.containsKey(username)) {
+                return user; 
+            }
+        }
+
+        
+        System.out.println("User not found");
+        throw new userNotFound();
+    }
+    public static void addUser(User person){
+        
+            try (FileOutputStream writer = new FileOutputStream("./Resources/UserDataBase.csv",true)) {
+                if(UserDataManagement.CheckDatabase(person)) throw new usrExstException();
+                else{
+                writer.write((person.toString()+"\n").getBytes());}
+            } catch (IOException e) {
+                System.out.println("Error:Couldn't add User");
+                
+            } catch(usrExstException e){
+                System.out.println("Error:User already exist");
+            }
+    }
+ 
+        
+    public static boolean CheckDatabase(User e){
+        int flag=0;//to check whether true or false
+        LinkedList<HashMap<String,String>> Users;
+        Users=UserDataManagement.LoadFile();//loads all Users from database
+        for (HashMap<String,String> user : Users) {//checks whether username exist in the database or not
+            if(user.containsKey(e.getUsername())){
+                flag++;
+                break;
+            }
+        }
+        return flag>0?true:false;
+    }
+    public static void updateUserPassword(String new_pass, String username){
+        LinkedList<HashMap<String, String>> allUsersData = LoadFile();
+        for (HashMap<String, String> user : allUsersData) {
+            if (user.containsKey(username)) {
+                user.put(username, new_pass);
+                break;
+            }
+        }
+        try (FileOutputStream writer = new FileOutputStream("./Resources/UserDataBase.csv")) {
+            for (HashMap<String, String> user : allUsersData) {
+                String userInfo = user.keySet().iterator().next() + "," + user.values().iterator().next() + "\n";
+                writer.write(userInfo.getBytes());
+            }
         } catch (IOException e) {
-            System.out.println("Error:Couldn't add User");
-            e.printStackTrace();
+            System.out.println("Error: Couldn't update User");
         }
     }
 

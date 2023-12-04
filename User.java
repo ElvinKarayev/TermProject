@@ -1,7 +1,6 @@
 public class User{
     private String Username;
     private String Password;
-    private int Index;
     
 
     public User(){
@@ -11,9 +10,6 @@ public class User{
         this.Password=Password;
     }
 
-    public void setIndex(int index) {
-        Index = index;
-    }
     public void setPassword(String password) {
         Password = password;
     }
@@ -22,14 +18,14 @@ public class User{
     }
     
 
-    protected int getIndex() {
-        return Index;
-    }
     public String getPassword() {
         return Password;
     }
     public String getUsername() {
         return Username;
+    }
+    public String toString(){
+        return Username+","+Password;
     }
 
 }
