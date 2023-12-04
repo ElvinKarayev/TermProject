@@ -3,8 +3,7 @@ import java.util.*;
 
 public class MovieDatabase {
     private List<Movie> movies;
-    private final String filePath = "MovieDatabase.csv"; // File path for the CSV file
-
+    private final String filePath = "./MovieDatabase.csv"; 
     public MovieDatabase() {
         movies = new ArrayList<>();
         loadMoviesFromFile();
@@ -19,7 +18,7 @@ public class MovieDatabase {
                 String[] movieDetails = line.split(",");
                 // Create a new Movie object from CSV data
                 Movie movie = new Movie(movieDetails[0], movieDetails[1],
-                        Integer.parseInt(movieDetails[2]), Integer.parseInt(movieDetails[3]));
+                        (int)Integer.parseInt(movieDetails[2]), (int)Integer.parseInt(movieDetails[3]));
                 movies.add(movie);
             }
         } catch (IOException e) {
@@ -51,9 +50,9 @@ public class MovieDatabase {
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
                     out.println(movie.getTitle() + 
-                    ", " + movie.getDirector() + 
-                    ", " + movie.getReleaseYear() + 
-                    ", " + movie.getRunningTime());
+                    "," + movie.getDirector() + 
+                    "," + movie.getReleaseYear() + 
+                    "," + movie.getRunningTime());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,9 +73,9 @@ public class MovieDatabase {
              PrintWriter out = new PrintWriter(bw)) {
             for (Movie movie : movies) {
                 out.println(movie.getTitle() + 
-                ", " + movie.getDirector() + 
-                ", " + movie.getReleaseYear() + 
-                ", " + movie.getRunningTime());
+                "," + movie.getDirector() + 
+                "," + movie.getReleaseYear() + 
+                "," + movie.getRunningTime());
             }
         } catch (IOException e) {
             e.printStackTrace();
