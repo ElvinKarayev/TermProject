@@ -75,14 +75,14 @@ public class LoginGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = userTextField.getText();
+        String username = userTextField.getText().trim();
         char[] passwordCharacters = passwordField.getPassword();
-        String password = new String(passwordCharacters);
+        String password = new String(passwordCharacters).trim();
 
         try {
             User user = UserDataManagement.getUser(username);
 
-            if (password.equals(user.getPassword())) {
+            if (password.compareTo(user.getPassword()) == 0) {
                 success.setText("Logged in successfully!");
             } else {
                 success.setText("Username or password is wrong!");

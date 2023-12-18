@@ -26,7 +26,7 @@ public class UserDataManagement {
             for (int i = 0; i < splittedData.length; i++) {
                 userData = splittedData[i].split(",");
                 HashMap<String, String> UserInfo = new HashMap<>();
-                UserInfo.put(userData[0], userData[1]);
+                UserInfo.put(userData[0].trim(), userData[1].trim());
 
                 allUsersData.add(UserInfo);
             }
