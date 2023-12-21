@@ -1,7 +1,8 @@
 package Library.UserData;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,17 +10,15 @@ import java.util.LinkedList;
 public class UserDataManagement {
 
     public static LinkedList<HashMap<String, String>> LoadFile() {
+        
         LinkedList<HashMap<String, String>> allUsersData = new LinkedList<>();
-        try (FileInputStream input = new FileInputStream("./Resources/UserDataBase.csv")) {
-            StringBuilder reader = new StringBuilder();
-
-            int a = input.read();
-
-            while (a != -1) {
-                reader.append((char) a);
-                a = input.read();
+        try (BufferedReader input=new BufferedReader(new FileReader("./Resources/UserDataBase.csv"))) {
+            StringBuilder reader=new StringBuilder();
+            String a=input.readLine();
+            while(a != null){
+                reader.append(a);
+                a=input.readLine();
             }
-
             String fullData = reader.toString();
             String[] splittedData = fullData.split("\n");
             String[] userData;
@@ -31,8 +30,7 @@ public class UserDataManagement {
                 allUsersData.add(UserInfo);
             }
         } catch (IOException e) {
-            System.out.println("Error:Couldn't read file");
-
+            System.out.println("Error:couldn't read file");
         }
         return allUsersData;
 
@@ -54,18 +52,17 @@ public class UserDataManagement {
     }
 
     public static int addUser(User person) {
-
-        try (FileOutputStream writer = new FileOutputStream("./Resources/UserDataBase.csv", true)) {
-            if (UserDataManagement.CheckDatabase(person))
+        try (BufferedWriter writer=new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv"))) {
+            if(UserDataManagement.CheckDatabase(person)){
                 throw new usrExstException();
-            else {
-                writer.write((person.toString() + "\n").getBytes());
+            }
+            else{
+                writer.write((person + "\n"));
                 return 1;
             }
         } catch (IOException e) {
             return -1;
-
-        } catch (usrExstException e) {
+        } catch (usrExstException e){
             return -2;
         }
     }
@@ -91,13 +88,13 @@ public class UserDataManagement {
                 break;
             }
         }
-        try (FileOutputStream writer = new FileOutputStream("./Resources/UserDataBase.csv")) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv"))) {
             for (HashMap<String, String> user : allUsersData) {
                 String userInfo = user.keySet().iterator().next() + "," + user.values().iterator().next() + "\n";
-                writer.write(userInfo.getBytes());
+                writer.write(userInfo);
             }
         } catch (IOException e) {
-            System.out.println("Error: Couldn't update User");
+            System.out.println("Error: Couldn't update User's password");
         }
     }
 
