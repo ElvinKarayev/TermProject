@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class MovieDatabase {
-    private List<Movie> movies;
-    private final String filePath = "./Resources/MovieDatabase.csv";
+    private static List<Movie> movies;
+    private static final String filePath = "./Resources/MovieDatabase.csv";
 
     public MovieDatabase() {
         movies = new ArrayList<>();
@@ -14,7 +14,7 @@ public class MovieDatabase {
 
     // Loads movies from the CSV file into the movies list
 
-    private void loadMoviesFromFile() {
+    public static void loadMoviesFromFile() {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -31,9 +31,9 @@ public class MovieDatabase {
 
     // Adds a new movie to the database if it doesn't already exist
 
-    public boolean addMovie(Movie newMovie) {
+    public static boolean addMovie(Movie newMovie) {
         if (!movieExists(newMovie)) {
-            movies.add(newMovie);
+            addMovie(newMovie);
             writeMovieToFile(newMovie);
             return true; // Movie added successfully
         } else {
@@ -43,14 +43,14 @@ public class MovieDatabase {
 
     // Check if a movie already exists in the database
 
-    private boolean movieExists(Movie movie) {
+    public static boolean movieExists(Movie movie) {
         return movies.stream().anyMatch(
                 m -> m.getTitle().equalsIgnoreCase(movie.getTitle()) && m.getReleaseYear() == movie.getReleaseYear());
     }
 
     // Add movie's data to CSV file
 
-    private void writeMovieToFile(Movie movie) {
+    public  static void writeMovieToFile(Movie movie) {
         try (FileWriter fw = new FileWriter(filePath, true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {
@@ -65,7 +65,7 @@ public class MovieDatabase {
 
     // Removes a movie from the database
 
-    public boolean removeMovie(String title) {
+    public static boolean removeMovie(String title) {
         boolean movieRemoved = movies.removeIf(movie -> movie.getTitle().equalsIgnoreCase(title));
         if (movieRemoved) {
             updateMovieFile();
@@ -73,7 +73,7 @@ public class MovieDatabase {
         return movieRemoved;
     }
 
-    private void updateMovieFile() {
+    public static void updateMovieFile() {
         try (FileWriter fw = new FileWriter(filePath, false);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {
@@ -90,7 +90,7 @@ public class MovieDatabase {
 
     // Retrieves details of a movie
 
-    public Movie getMovieDetails(String title) {
+    public static Movie getMovieDetails(String title) {
         return movies.stream()
                 .filter(movie -> movie.getTitle().equalsIgnoreCase(title))
                 .findFirst()
