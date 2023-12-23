@@ -3,9 +3,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+
 
 public class UserDataManagement {
 
@@ -27,9 +29,11 @@ public class UserDataManagement {
                 HashMap<String, String> UserInfo = new HashMap<>();
                 UserInfo.put(userData[0].trim(), userData[1].trim());
 
+
                 allUsersData.add(UserInfo);
             }
         } catch (IOException e) {
+
             System.out.println("Error:couldn't read file");
         }
         return allUsersData;
@@ -39,10 +43,12 @@ public class UserDataManagement {
     // will return the hashmap of the user if it is found otherwise it will throw
     // error
     public static User getUser(String username) {
+
         LinkedList<HashMap<String, String>> allUsersData = LoadFile();
 
         for (HashMap<String, String> user : allUsersData) {
             if (user.containsKey(username)) {
+
                 String password = user.get(username); // Get the password from the HashMap
                 return new User(username, password);
             }
@@ -73,6 +79,7 @@ public class UserDataManagement {
         Users = UserDataManagement.LoadFile();// loads all Users from database
         for (HashMap<String, String> user : Users) {// checks whether username exist in the database or not
             if (user.containsKey(e.getUsername())) {
+
                 flag++;
                 break;
             }
@@ -81,6 +88,7 @@ public class UserDataManagement {
     }
 
     public static void updateUserPassword(String new_pass, String username) {
+
         LinkedList<HashMap<String, String>> allUsersData = LoadFile();
         for (HashMap<String, String> user : allUsersData) {
             if (user.containsKey(username)) {

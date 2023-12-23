@@ -32,7 +32,7 @@ public class Movie {
         return title;
     }
 
-    // Setters
+    //Setters
 
     public void setDirector(String director) {
         this.director = director;
@@ -60,11 +60,11 @@ public class Movie {
     public String getMovieSummary() {
         return title + " (" + releaseYear + ") - Directed by " + director;
     }
-
     @Override
     public String toString() {
         return "Movie title=" + title + ", director=" + director + ", releaseYear=" + releaseYear + ", runningTime="
                 + runningTime;
     }
+
 
 }
