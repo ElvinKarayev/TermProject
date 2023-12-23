@@ -17,7 +17,7 @@ public class MovieDetailsGUI extends JFrame {
     private static JPanel panel;
 
     public MovieDetailsGUI(Movie movie) {
-        MovieDatabase movieDatabase = new MovieDatabase();
+        new MovieDatabase();
 
         panel = new JPanel();
         this.setSize(600, 600);
@@ -30,7 +30,7 @@ public class MovieDetailsGUI extends JFrame {
         titleLabel.setBounds(10, 20, 80, 25);
         panel.add(titleLabel);
 
-        titleTextLabel = new JLabel(movieDatabase.getMovieDetails(movie.getTitle()).getTitle());
+        titleTextLabel = new JLabel(MovieDatabase.getMovieDetails(movie.getTitle()).getTitle());
         titleTextLabel.setBounds(100, 20, 165, 25);
         panel.add(titleTextLabel);
 
@@ -38,7 +38,7 @@ public class MovieDetailsGUI extends JFrame {
         directorLabel.setBounds(10, 50, 80, 25);
         panel.add(directorLabel);
 
-        directorTextLabel = new JLabel(movieDatabase.getMovieDetails(movie.getTitle()).getDirector());
+        directorTextLabel = new JLabel(MovieDatabase.getMovieDetails(movie.getTitle()).getDirector());
         directorTextLabel.setBounds(100, 50, 165, 25);
         panel.add(directorTextLabel);
 
@@ -47,7 +47,7 @@ public class MovieDetailsGUI extends JFrame {
         panel.add(releaseYearLabel);
 
         releaseYearTextLabel = new JLabel(
-                Integer.toString(movieDatabase.getMovieDetails(movie.getTitle()).getReleaseYear()));
+                Integer.toString(MovieDatabase.getMovieDetails(movie.getTitle()).getReleaseYear()));
         releaseYearTextLabel.setBounds(100, 80, 165, 25);
         panel.add(releaseYearTextLabel);
 
@@ -56,7 +56,7 @@ public class MovieDetailsGUI extends JFrame {
         panel.add(runningTimeLabel);
 
         runningTimeTextLabel = new JLabel(
-                Integer.toString(movieDatabase.getMovieDetails(movie.getTitle()).getRunningTime()));
+                Integer.toString(MovieDatabase.getMovieDetails(movie.getTitle()).getRunningTime()));
         runningTimeTextLabel.setBounds(100, 110, 165, 25);
         panel.add(runningTimeTextLabel);
 

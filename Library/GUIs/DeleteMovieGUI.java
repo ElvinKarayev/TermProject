@@ -51,8 +51,8 @@ public class DeleteMovieGUI extends JFrame implements ActionListener {
             return;
         }
 
-        MovieDatabase movieDatabase = new MovieDatabase();
-        if (movieDatabase.removeMovie(title)) {
+        new MovieDatabase();
+        if (MovieDatabase.removeMovie(title)) {
             success.setText("Movie removed successfully!");
         } else {
             success.setText("Movie does not exist.");

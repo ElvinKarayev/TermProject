@@ -97,4 +97,8 @@ public class MovieDatabase {
                 .orElse(null);
     }
 
+    public static List<Movie> getMovies() {
+        return movies;
+    }
+
 }

@@ -84,8 +84,8 @@ public class AddMovieGUI extends JFrame implements ActionListener {
             int releaseYearValue = Integer.parseInt(releaseYear);
             int runningTimeValue = Integer.parseInt(runningTime);
 
-            MovieDatabase movieDatabase = new MovieDatabase();
-            if (movieDatabase.addMovie(new Movie(title, director, releaseYearValue, runningTimeValue))) {
+            new MovieDatabase();
+            if (MovieDatabase.addMovie(new Movie(title, director, releaseYearValue, runningTimeValue))) {
                 success.setText("Movie added successfully!");
             } else {
                 success.setText("Movie already exists in the database.");

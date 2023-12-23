@@ -49,7 +49,7 @@ public class GetMovieGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String title = titleTextField.getText();
-        Movie movie = movieDatabase.getMovieDetails(title);
+        Movie movie = MovieDatabase.getMovieDetails(title);
         if (movie != null) {
             MovieDetailsGUI movieDetailsGUI = new MovieDetailsGUI(movie);
         } else {
