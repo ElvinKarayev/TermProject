@@ -16,7 +16,7 @@ public class UserDataManagement {
             StringBuilder reader=new StringBuilder();
             String a=input.readLine();
             while(a != null){
-                reader.append(a);
+                reader.append(a+'\n');
                 a=input.readLine();
             }
             String fullData = reader.toString();
