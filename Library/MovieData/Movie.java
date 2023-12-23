@@ -1,21 +1,20 @@
 package Library.MovieData;
-public class Movie{
 
+public class Movie {
 
-    private String title="";
-    private String director="";
+    private String title = "";
+    private String director = "";
     private int releaseYear;
     private int runningTime;
 
-
-    public Movie(String title, String director, int releaseYear, int runningTime){
+    public Movie(String title, String director, int releaseYear, int runningTime) {
         this.title = title;
         this.director = director;
         this.releaseYear = releaseYear;
         this.runningTime = runningTime;
     }
 
-    //Getters
+    // Getters
 
     public String getDirector() {
         return director;
@@ -51,7 +50,6 @@ public class Movie{
         this.runningTime = runningTime;
     }
 
-    
     public void displayInfo() {
         System.out.println("Title: " + title);
         System.out.println("Director: " + director);
@@ -61,6 +59,11 @@ public class Movie{
 
     public String getMovieSummary() {
         return title + " (" + releaseYear + ") - Directed by " + director;
+    }
+    @Override
+    public String toString() {
+        return "Movie title=" + title + ", director=" + director + ", releaseYear=" + releaseYear + ", runningTime="
+                + runningTime;
     }
 
 
