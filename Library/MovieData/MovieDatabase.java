@@ -21,9 +21,9 @@ public class MovieDatabase {
             while ((line = br.readLine()) != null) {
                 String[] movieDetails = line.split(",");
                 // Create a new Movie object from CSV data
-                Movie movie = new Movie(movieDetails[0], movieDetails[1],
-                        (int) Integer.parseInt(movieDetails[2]), (int) Integer.parseInt(movieDetails[3]));
-
+                int year = Integer.parseInt(movieDetails[2].trim());
+                int runningTime = Integer.parseInt(movieDetails[3].trim());
+                Movie movie = new Movie(movieDetails[0], movieDetails[1], year, runningTime);
                 movies.add(movie);
             }
         } catch (IOException e) {
@@ -93,10 +93,10 @@ public class MovieDatabase {
     // Retrieves details of a movie
 
 
-    public static Movie getMovieDetails(String title) {
+    public static Movie getMovieDetails(String title, int year) {
 
         return movies.stream()
-                .filter(movie -> movie.getTitle().equalsIgnoreCase(title))
+                .filter(movie -> movie.getTitle().equalsIgnoreCase(title) && movie.getReleaseYear() == year)
                 .findFirst()
                 .orElse(null);
     }

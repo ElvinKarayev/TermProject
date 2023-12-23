@@ -1,6 +1,7 @@
 package Library.UserData;
-public class userNotFound extends Error{
-    public userNotFound(){
+
+public class UserNotFound extends Error {
+    public UserNotFound() {
         super("User Not Found");
     }
 }
