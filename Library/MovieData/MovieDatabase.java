@@ -1,11 +1,11 @@
 package Library.MovieData;
+
 import java.io.*;
 import java.util.*;
 
 public class MovieDatabase {
     private static List<Movie> movies;
     private static final String filePath = "./Resources/MovieDatabase.csv";
-
 
     public MovieDatabase() {
         movies = new ArrayList<>();
@@ -52,7 +52,7 @@ public class MovieDatabase {
 
     // Add movie's data to CSV file
 
-    public  static void writeMovieToFile(Movie movie) {
+    public static void writeMovieToFile(Movie movie) {
         try (FileWriter fw = new FileWriter(filePath, true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {
@@ -92,7 +92,6 @@ public class MovieDatabase {
 
     // Retrieves details of a movie
 
-
     public static Movie getMovieDetails(String title, int year) {
 
         return movies.stream()
@@ -100,6 +99,7 @@ public class MovieDatabase {
                 .findFirst()
                 .orElse(null);
     }
+
     public static List<Movie> getMovies() {
         return movies;
     }

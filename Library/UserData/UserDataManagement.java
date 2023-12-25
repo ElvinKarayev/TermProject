@@ -1,4 +1,5 @@
 package Library.UserData;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,18 +9,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
 public class UserDataManagement {
 
     public static LinkedList<HashMap<String, String>> LoadFile() {
-        
+
         LinkedList<HashMap<String, String>> allUsersData = new LinkedList<>();
-        try (BufferedReader input=new BufferedReader(new FileReader("./Resources/UserDataBase.csv"))) {
-            StringBuilder reader=new StringBuilder();
-            String a=input.readLine();
-            while(a != null){
-                reader.append(a+'\n');
-                a=input.readLine();
+        try (BufferedReader input = new BufferedReader(new FileReader("./Resources/UserDataBase.csv"))) {
+            StringBuilder reader = new StringBuilder();
+            String a = input.readLine();
+            while (a != null) {
+                reader.append(a + '\n');
+                a = input.readLine();
             }
             String fullData = reader.toString();
             String[] splittedData = fullData.split("\n");
@@ -28,7 +28,6 @@ public class UserDataManagement {
                 userData = splittedData[i].split(",");
                 HashMap<String, String> UserInfo = new HashMap<>();
                 UserInfo.put(userData[0].trim(), userData[1].trim());
-
 
                 allUsersData.add(UserInfo);
             }
@@ -58,17 +57,16 @@ public class UserDataManagement {
     }
 
     public static int addUser(User person) {
-        try (BufferedWriter writer=new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv"))) {
-            if(UserDataManagement.CheckDatabase(person)){
-                throw new usrExstException();
-            }
-            else{
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv"))) {
+            if (UserDataManagement.CheckDatabase(person)) {
+                throw new UsrExstException();
+            } else {
                 writer.write((person + "\n"));
                 return 1;
             }
         } catch (IOException e) {
             return -1;
-        } catch (usrExstException e){
+        } catch (UsrExstException e) {
             return -2;
         }
     }

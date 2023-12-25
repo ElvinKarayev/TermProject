@@ -1,4 +1,4 @@
-package Library.GUIs;
+// package Library.GUIs;
 
 import javax.swing.*;
 
@@ -83,7 +83,12 @@ public class LoginGUI extends JFrame implements ActionListener {
             User user = UserDataManagement.getUser(username);
 
             if (password.compareTo(user.getPassword()) == 0) {
-                success.setText("Logged in successfully!");
+                this.dispose();
+                if (username.equals("admin") && password.equals("admin")) {
+                    new AdminPanelGUI();
+                } else {
+                    new MoviesGUI(user);
+                }
             } else {
                 success.setText("Username or password is wrong!");
             }
