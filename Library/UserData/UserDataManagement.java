@@ -57,7 +57,7 @@ public class UserDataManagement {
     }
 
     public static int addUser(User person) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv",true))) {
             if (UserDataManagement.CheckDatabase(person)) {
                 throw new UsrExstException();
             } else {

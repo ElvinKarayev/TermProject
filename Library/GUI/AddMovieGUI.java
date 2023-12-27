@@ -1,5 +1,4 @@
-// package Library.GUIs;
-
+package Library.GUI;
 import javax.swing.*;
 
 import Library.MovieData.Movie;

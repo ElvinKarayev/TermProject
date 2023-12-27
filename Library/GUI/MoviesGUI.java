@@ -1,5 +1,5 @@
+package Library.GUI;
 import javax.swing.*;
-
 import Library.MovieData.Movie;
 import Library.MovieData.MovieDatabase;
 import Library.MovieData.Watchlist;

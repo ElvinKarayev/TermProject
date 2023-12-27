@@ -1,10 +1,6 @@
-
+import Library.GUI.*;
 import java.util.List;
-
-// import Library.GUIs.LoginGUI;
-import Library.MovieData.Movie;
-import Library.MovieData.MovieDatabase;
-import Library.MovieData.Watchlist;
+import Library.MovieData.*;
 
 public class Main {
     public static void main(String[] args) {
