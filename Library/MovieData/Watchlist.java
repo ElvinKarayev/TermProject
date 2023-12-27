@@ -29,21 +29,38 @@ public class Watchlist {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith(user + '-')) {
-                    String removedMovieIfFirst = String.format("[Movie title='%s', director='%s', releaseYear='%d']",
-                            movie.getTitle(), movie.getDirector(), movie.getReleaseYear());
-                    String removedMovie = String.format(",[Movie title='%s', director='%s', releaseYear='%d']",
-                            movie.getTitle(), movie.getDirector(), movie.getReleaseYear());
+                    String removedMovie = String.format("[Movie title='%s', director='%s', releaseYear='%d', runningTime='%d']",
+                            movie.getTitle(), movie.getDirector(), movie.getReleaseYear(), movie.getRunningTime());
                     int indexOf = line.indexOf(removedMovie);
                     int indexofUserLastLetter = line.indexOf('-');
+                    int ifmovieislast =line.indexOf(removedMovie);
+
                     if (indexOf == indexofUserLastLetter + 1) {
-                        line.replace(removedMovieIfFirst, "");
+                        line=line.replace(removedMovie, "");
+                        line=line.replace("-,", "-");
                     } else {
-                        line.replace(removedMovieIfFirst, "");
+                        //this if statement checks whether our movie is the last one in our watchlist data
+                        if (ifmovieislast+removedMovie.length()==line.length()){
+                            
+                            line=line.replace(","+removedMovie, "");
+                        }
+                        //and this one is for middle movies in watchlist storing for example we have movie stored like that [movie1],[another movie],[another movie 2]
+                        //in order for this to be like [movie1],[another movie2] 
+                        else{
+                           
+                            line=line.replace(removedMovie, "");
+                            line=line.replace(",,", ",");
+                        }
+                        
+                    }
+                    if(!line.contains("[")){
+                        continue;
                     }
 
                 }
                 lines.add(line);
             }
+            
         } catch (Exception e) {
         }
         try (BufferedWriter wr = new BufferedWriter(new FileWriter(pathToList))) {
@@ -64,7 +81,7 @@ public class Watchlist {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith(user + "-")) {
-                    line += String.format(", [Movie title='%s', director='%s', releaseYear='%d', runningTime='%d']",
+                    line += String.format(",[Movie title='%s', director='%s', releaseYear='%d', runningTime='%d']",
                             movie.getTitle(), movie.getDirector(), movie.getReleaseYear(), movie.getRunningTime());
                     userFound = true;
                 }
