@@ -23,8 +23,9 @@ public class LoginGUI extends JFrame implements ActionListener {
 
     public LoginGUI() {
         panel = new JPanel();
-        this.setSize(600, 600);
+        this.setSize(300, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         this.add(panel);
 
         panel.setLayout(null);
@@ -49,6 +50,7 @@ public class LoginGUI extends JFrame implements ActionListener {
         loginButton.setBounds(100, 80, 80, 25);
         loginButton.addActionListener(this);
         panel.add(loginButton);
+        this.getRootPane().setDefaultButton(loginButton);
 
         hasNoAccountLabel = new JLabel("No account?");
         hasNoAccountLabel.setBounds(10, 150, 80, 25);

@@ -1,4 +1,5 @@
 package Library.GUI;
+
 import javax.swing.*;
 
 import Library.MovieData.Movie;
@@ -67,8 +68,11 @@ public class AddMovieGUI extends JFrame implements ActionListener {
         panel.add(addMovieButton);
 
         success = new JLabel("");
-        success.setBounds(10, 170, 300, 25);
+        success.setBounds(10, 170, 500, 25);
         panel.add(success);
+
+        // Set focus painted to false for add movie button
+        addMovieButton.setFocusPainted(false);
 
         this.setVisible(true);
     }

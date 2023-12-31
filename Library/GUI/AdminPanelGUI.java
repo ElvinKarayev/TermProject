@@ -1,13 +1,13 @@
 package Library.GUI;
+
 import javax.swing.*;
-
-import Library.MovieData.Movie;
-import Library.MovieData.MovieDatabase;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import Library.MovieData.Movie;
+import Library.MovieData.MovieDatabase;
 
 public class AdminPanelGUI extends JFrame {
     private JPanel moviesPanel;
@@ -20,7 +20,7 @@ public class AdminPanelGUI extends JFrame {
         movieDatabase = new MovieDatabase();
 
         moviesPanel = new JPanel();
-        moviesPanel.setLayout(new GridLayout(0, 5, 10, 10));
+        moviesPanel.setLayout(new BoxLayout(moviesPanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
         JScrollPane scrollPane = new JScrollPane(moviesPanel);
 
         JButton addButton = new JButton("Add Movie");
@@ -29,11 +29,13 @@ public class AdminPanelGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Open a dialog to add a new movie
                 new AddMovieGUI();
+                displayMovies();
             }
         });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
+        addButton.setFocusPainted(false);
 
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
@@ -50,13 +52,15 @@ public class AdminPanelGUI extends JFrame {
         // Get a list of movies from the movieDatabase
         List<Movie> movies = movieDatabase.getMovies();
 
+        // Use GridLayout for consistent structure
+        moviesPanel.setLayout(new GridLayout(movies.size(), 1, 10, 10));
+
         // Display each movie with buttons
         for (Movie movie : movies) {
-            JPanel movieEntry = new JPanel(new BorderLayout());
+            JPanel movieEntry = new JPanel(new GridLayout(1, 2, 10, 10));
             JLabel titleLabel = new JLabel(movie.getTitle());
 
             JButton viewButton = new JButton("View");
-            setButtonSize(viewButton, 80, 10);
             viewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -65,7 +69,6 @@ public class AdminPanelGUI extends JFrame {
             });
 
             JButton deleteButton = new JButton("Delete");
-            setButtonSize(deleteButton, 80, 10);
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -74,9 +77,19 @@ public class AdminPanelGUI extends JFrame {
                 }
             });
 
-            movieEntry.add(titleLabel, BorderLayout.NORTH);
-            movieEntry.add(viewButton, BorderLayout.WEST);
-            movieEntry.add(deleteButton, BorderLayout.EAST);
+            movieEntry.add(titleLabel);
+
+            // Set focus painted to false for both buttons
+            viewButton.setFocusPainted(false);
+            deleteButton.setFocusPainted(false);
+
+            // Create a panel for buttons and add it to the movieEntry
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            buttonPanel.add(viewButton);
+            buttonPanel.add(deleteButton);
+            movieEntry.add(buttonPanel);
+
+            movieEntry.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Add space between lines
 
             moviesPanel.add(movieEntry);
         }
@@ -84,12 +97,6 @@ public class AdminPanelGUI extends JFrame {
         // Refresh the panel to reflect the changes
         moviesPanel.revalidate();
         moviesPanel.repaint();
-    }
-
-    private void setButtonSize(JButton button, int width, int height) {
-        button.setPreferredSize(new Dimension(width, height));
-        button.setMinimumSize(new Dimension(width, height));
-        button.setMaximumSize(new Dimension(width, height));
     }
 
     public static void main(String[] args) {
