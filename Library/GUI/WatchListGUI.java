@@ -42,7 +42,8 @@ public class WatchlistGUI extends JFrame {
         // Use GridLayout for consistent structure
         watchlistPanel.setLayout(new GridLayout(userWatchlist.size(), 1, 10, 10));
 
-        // Display each movie in the user's watchlist with "Remove from Watchlist" button
+        // Display each movie in the user's watchlist with "Remove from Watchlist"
+        // button
         for (Movie movie : userWatchlist) {
             JPanel movieEntry = new JPanel(new GridLayout(1, 2, 10, 10));
             JLabel titleLabel = new JLabel(movie.getTitle());
