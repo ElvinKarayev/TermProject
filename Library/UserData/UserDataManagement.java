@@ -41,7 +41,7 @@ public class UserDataManagement {
 
     // will return the hashmap of the user if it is found otherwise it will throw
     // error
-    public static User getUser(String username) {
+    public static User getUser(String username) throws UserNotFound {
 
         LinkedList<HashMap<String, String>> allUsersData = LoadFile();
 

@@ -52,7 +52,7 @@ public class MovieDatabase {
 
     // Add movie's data to CSV file
 
-    public static void writeMovieToFile(Movie movie) {
+    private static void writeMovieToFile(Movie movie) {
         try (FileWriter fw = new FileWriter(filePath, true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {

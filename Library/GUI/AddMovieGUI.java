@@ -95,7 +95,12 @@ public class AddMovieGUI extends JFrame implements ActionListener {
             String runningTime = runningTimeTextField.getText();
             int releaseYearValue = Integer.parseInt(releaseYear);
             int runningTimeValue = Integer.parseInt(runningTime);
-
+            if (releaseYearValue<1888){
+                throw new FakeReleaseYear();
+            }
+            if(runningTimeValue<1){
+                throw new InvalidRunningTime();
+            }
             new MovieDatabase();
             if (MovieDatabase.addMovie(new Movie(title, director, releaseYearValue, runningTimeValue))) {
                 success.setText("Movie added successfully!");
@@ -106,6 +111,10 @@ public class AddMovieGUI extends JFrame implements ActionListener {
             }
         } catch (NumberFormatException ex) {
             success.setText("Invalid input. Please enter valid integer values for Release Year and Running Time.");
+        } catch (FakeReleaseYear ex){
+            success.setText("Release year can not be lower that 1888");
+        } catch (InvalidRunningTime ex){
+            success.setText("running time can't be lower than 1 minute");
         }
     }
 
