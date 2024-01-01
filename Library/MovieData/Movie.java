@@ -65,6 +65,10 @@ public class Movie {
         return "Movie title=" + title + ", director=" + director + ", releaseYear=" + releaseYear + ", runningTime="
                 + runningTime;
     }
-
-
+    @Override
+    public boolean equals(Object obj){
+        Movie smth=(Movie) obj;
+        return this.getTitle().equals(smth.getTitle()) && this.getDirector().equals(smth.getDirector()) && this.getReleaseYear()==smth.getReleaseYear() && this.getRunningTime()==smth.getRunningTime();
+        
+    }
 }

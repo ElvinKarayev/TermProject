@@ -4,20 +4,32 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Watchlist {
     private static String pathToList = "./Resources/Watchlist.csv";
 
     public static void addMovieToList(String user, Movie user_movie) {
-        try {
-            if (MovieDatabase.movieExists(user_movie)) {
-                updateWatchlist(user, user_movie);
-            } else {
-                throw new MovieNotExist();
+        if(getWatchlist(user).contains(user_movie)){
+           
+            try {
+                throw new MovieAlreadyAdded();
+            } catch (MovieAlreadyAdded e) {
+                System.out.println("Movie has already been added");
             }
-        } catch (MovieNotExist e) {
-            System.out.println("Movie Doesn't exist");
+        }
+        else{
+            try {
+                if (MovieDatabase.movieExists(user_movie)) {
+                    updateWatchlist(user, user_movie);
+                } else {
+                    throw new MovieNotExist();
+                }
+            } catch (MovieNotExist e) {
+                System.out.println("Movie Doesn't exist");
+            }
         }
 
     }
@@ -111,4 +123,34 @@ public class Watchlist {
         }
     }
 
+    public static LinkedList<Movie> getWatchlist(String user){
+        LinkedList<Movie> userWatchlist=new LinkedList<>();
+        try (BufferedReader reader=new BufferedReader(new FileReader(pathToList))) {
+            String line;
+            int flag=0;
+            while((line=reader.readLine())!=null){
+                if(line.startsWith(user+'-')){
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){throw new WatchlistNotExist();}
+            String[] Movies = line.substring(line.indexOf("-")+1).split("],\\[");
+            String[] MovieDetails= Movies[0].split("'");
+            String Title; String director; int releaseYear; int runningTime;
+            for (String movie : Movies) {
+                MovieDetails=movie.split("'");
+                Title=MovieDetails[1];
+                director=MovieDetails[3];
+                releaseYear=Integer.parseInt(MovieDetails[5]);
+                runningTime=Integer.parseInt(MovieDetails[7]);
+                userWatchlist.add(new Movie(Title, director, releaseYear, runningTime));
+            }
+        } catch (WatchlistNotExist e) {
+            System.out.println("Your watchlist is empty");
+        } catch (IOException e){
+            System.out.println("there was an error while reading your Watchlist");
+        }
+        return userWatchlist;
+    }
 }
