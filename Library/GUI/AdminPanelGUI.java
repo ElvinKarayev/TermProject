@@ -30,6 +30,16 @@ public class AdminPanelGUI extends JFrame {
             }
         });
 
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current AdminPanelGUI and open the LoginGUI
+                dispose(); // Close the current frame
+                new LoginGUI();
+            }
+        });
+
         JPanel buttonPanel = new JPanel(new BorderLayout());
 
         // Create a panel for the center containing the add movie button
@@ -37,9 +47,14 @@ public class AdminPanelGUI extends JFrame {
         centerButtonPanel.add(addButton);
         addButton.setFocusPainted(false);
 
-        // Add both left and center panels to the main button panel
+        // Create a panel for the right containing the logout button
+        JPanel rightButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightButtonPanel.add(logoutButton);
+        logoutButton.setFocusPainted(false);
 
+        // Add both left and right panels to the main button panel
         buttonPanel.add(centerButtonPanel, BorderLayout.CENTER);
+        buttonPanel.add(rightButtonPanel, BorderLayout.AFTER_LINE_ENDS);
 
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
