@@ -86,7 +86,4 @@ public class RegistrationGUI extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        RegistrationGUI registrationGUI = new RegistrationGUI();
-    }
 }

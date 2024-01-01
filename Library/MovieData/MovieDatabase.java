@@ -35,7 +35,7 @@ public class MovieDatabase {
 
     public static boolean addMovie(Movie newMovie) {
         if (!movieExists(newMovie)) {
-            addMovie(newMovie);
+            movies.add(newMovie);
             writeMovieToFile(newMovie);
             return true; // Movie added successfully
         } else {

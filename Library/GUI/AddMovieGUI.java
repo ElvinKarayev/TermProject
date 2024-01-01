@@ -1,12 +1,13 @@
 package Library.GUI;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import Library.MovieData.Movie;
 import Library.MovieData.MovieDatabase;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AddMovieGUI extends JFrame implements ActionListener {
 
@@ -36,6 +37,7 @@ public class AddMovieGUI extends JFrame implements ActionListener {
 
         titleTextField = new JTextField(20);
         titleTextField.setBounds(100, 20, 165, 25);
+        titleTextField.addKeyListener(new EnterKeyListener());
         panel.add(titleTextField);
 
         directorLabel = new JLabel("Director");
@@ -44,6 +46,7 @@ public class AddMovieGUI extends JFrame implements ActionListener {
 
         directorTextField = new JTextField();
         directorTextField.setBounds(100, 50, 165, 25);
+        directorTextField.addKeyListener(new EnterKeyListener());
         panel.add(directorTextField);
 
         releaseYearLabel = new JLabel("Release Year");
@@ -52,6 +55,7 @@ public class AddMovieGUI extends JFrame implements ActionListener {
 
         releaseYearTextField = new JTextField(20);
         releaseYearTextField.setBounds(100, 80, 165, 25);
+        releaseYearTextField.addKeyListener(new EnterKeyListener());
         panel.add(releaseYearTextField);
 
         runningTimeLabel = new JLabel("Running Time");
@@ -60,6 +64,7 @@ public class AddMovieGUI extends JFrame implements ActionListener {
 
         runningTimeTextField = new JTextField();
         runningTimeTextField.setBounds(100, 110, 165, 25);
+        runningTimeTextField.addKeyListener(new EnterKeyListener());
         panel.add(runningTimeTextField);
 
         addMovieButton = new JButton("Add movie");
@@ -79,6 +84,10 @@ public class AddMovieGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        addMovie();
+    }
+
+    private void addMovie() {
         try {
             String title = titleTextField.getText();
             String director = directorTextField.getText();
@@ -90,6 +99,8 @@ public class AddMovieGUI extends JFrame implements ActionListener {
             new MovieDatabase();
             if (MovieDatabase.addMovie(new Movie(title, director, releaseYearValue, runningTimeValue))) {
                 success.setText("Movie added successfully!");
+                dispose();
+                AdminPanelGUI.displayMovies();
             } else {
                 success.setText("Movie already exists in the database.");
             }
@@ -98,7 +109,21 @@ public class AddMovieGUI extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        AddMovieGUI addMovieGUI = new AddMovieGUI();
+    // Inner class to handle Enter key press
+    private class EnterKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                addMovie();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
     }
 }

@@ -7,20 +7,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Watchlist {
     private static String pathToList = "./Resources/Watchlist.csv";
 
-    public static void addMovieToList(String user, Movie user_movie) {
-        if(getWatchlist(user).contains(user_movie)){
-           
+    public static int addMovieToList(String user, Movie user_movie) {
+        if (getWatchlist(user).contains(user_movie)) {
+
             try {
                 throw new MovieAlreadyAdded();
             } catch (MovieAlreadyAdded e) {
-                System.out.println("Movie has already been added");
+                return -1;
             }
-        }
-        else{
+        } else {
             try {
                 if (MovieDatabase.movieExists(user_movie)) {
                     updateWatchlist(user, user_movie);
@@ -28,10 +28,10 @@ public class Watchlist {
                     throw new MovieNotExist();
                 }
             } catch (MovieNotExist e) {
-                System.out.println("Movie Doesn't exist");
+                return -2;
             }
         }
-
+        return 1;
     }
 
     public static void removeMovieFromWatchlist(String user, Movie movie) {
@@ -61,20 +61,16 @@ public class Watchlist {
                         // movie stored like that [movie1],[another movie],[another movie 2]
                         // in order for this to be like [movie1],[another movie2]
                         else {
-
                             line = line.replace(removedMovie, "");
                             line = line.replace(",,", ",");
                         }
-
                     }
                     if (!line.contains("[")) {
                         continue;
                     }
-
                 }
                 lines.add(line);
             }
-
         } catch (Exception e) {
         }
         try (BufferedWriter wr = new BufferedWriter(new FileWriter(pathToList))) {
@@ -82,7 +78,6 @@ public class Watchlist {
                 wr.write(line);
                 wr.newLine();
             }
-
         } catch (Exception e) {
         }
     }
@@ -123,32 +118,37 @@ public class Watchlist {
         }
     }
 
-    public static LinkedList<Movie> getWatchlist(String user){
-        LinkedList<Movie> userWatchlist=new LinkedList<>();
-        try (BufferedReader reader=new BufferedReader(new FileReader(pathToList))) {
+    public static LinkedList<Movie> getWatchlist(String user) {
+        LinkedList<Movie> userWatchlist = new LinkedList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathToList))) {
             String line;
-            int flag=0;
-            while((line=reader.readLine())!=null){
-                if(line.startsWith(user+'-')){
-                    flag=1;
+            int flag = 0;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith(user + '-')) {
+                    flag = 1;
                     break;
                 }
             }
-            if(flag==0){throw new WatchlistNotExist();}
-            String[] Movies = line.substring(line.indexOf("-")+1).split("],\\[");
-            String[] MovieDetails= Movies[0].split("'");
-            String Title; String director; int releaseYear; int runningTime;
+            if (flag == 0) {
+                throw new WatchlistNotExist();
+            }
+            String[] Movies = line.substring(line.indexOf("-") + 1).split("],\\[");
+            String[] MovieDetails = Movies[0].split("'");
+            String Title;
+            String director;
+            int releaseYear;
+            int runningTime;
             for (String movie : Movies) {
-                MovieDetails=movie.split("'");
-                Title=MovieDetails[1];
-                director=MovieDetails[3];
-                releaseYear=Integer.parseInt(MovieDetails[5]);
-                runningTime=Integer.parseInt(MovieDetails[7]);
+                MovieDetails = movie.split("'");
+                Title = MovieDetails[1];
+                director = MovieDetails[3];
+                releaseYear = Integer.parseInt(MovieDetails[5]);
+                runningTime = Integer.parseInt(MovieDetails[7]);
                 userWatchlist.add(new Movie(Title, director, releaseYear, runningTime));
             }
         } catch (WatchlistNotExist e) {
-            System.out.println("Your watchlist is empty");
-        } catch (IOException e){
+            // System.out.println("Your watchlist is empty");
+        } catch (IOException e) {
             System.out.println("there was an error while reading your Watchlist");
         }
         return userWatchlist;
