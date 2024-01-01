@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import Library.MovieData.Movie;
@@ -13,7 +14,6 @@ import Library.UserData.User;
 
 public class MoviesGUI extends JFrame {
     private JPanel moviesPanel;
-    private MovieDatabase movieDatabase;
     private User user; // Store the reference to the user
 
     public MoviesGUI(User user) {
@@ -21,8 +21,6 @@ public class MoviesGUI extends JFrame {
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        movieDatabase = new MovieDatabase();
 
         moviesPanel = new JPanel();
         moviesPanel.setLayout(new BoxLayout(moviesPanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
@@ -55,15 +53,21 @@ public class MoviesGUI extends JFrame {
         moviesPanel.removeAll();
 
         // Get a list of movies from the movieDatabase
-        List<Movie> movies = movieDatabase.getMovies();
-        Watchlist watchlist = new Watchlist();
+        List<Movie> movies = MovieDatabase.getMovies();
 
-        // Use GridLayout for consistent structure
-        moviesPanel.setLayout(new GridLayout(movies.size(), 1, 10, 10));
+        // Use BorderLayout to place the movie entries at the top
+        moviesPanel.setLayout(new BorderLayout());
+
+        JPanel movieEntriesPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Display each movie with buttons
         for (Movie movie : movies) {
-            JPanel movieEntry = new JPanel(new GridLayout(1, 2, 10, 10));
+            JPanel movieEntryPanel = new JPanel(new BorderLayout());
             JLabel titleLabel = new JLabel(movie.getTitle());
 
             JButton viewButton = new JButton("View");
@@ -78,27 +82,44 @@ public class MoviesGUI extends JFrame {
             addToWatchList.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    watchlist.addMovieToList(user.getUsername(), movie);
+                    int result = Watchlist.addMovieToList(user.getUsername(), movie);
                     displayMovies();
+
+                    if (result == -1) {
+                        // Movie has already been added
+                        displaySuccessMessage("Movie has already been added to the watchlist.");
+                    } else if (result == -2) {
+                        // Movie doesn't exist
+                        displaySuccessMessage("Movie doesn't exist.");
+                    } else if (result == 1) {
+                        // Movie added successfully
+                        displaySuccessMessage("Movie added successfully");
+                    }
                 }
             });
 
-            movieEntry.add(titleLabel);
+            JPanel titlePanel = new JPanel();
+            titlePanel.add(titleLabel);
+            movieEntryPanel.add(titlePanel, BorderLayout.WEST);
+
+            // Set fixed height for the movie entry panel
+            movieEntryPanel.setMinimumSize(new Dimension(0, 50)); // You can adjust the height as needed
 
             // Set focus painted to false for both buttons
             viewButton.setFocusPainted(false);
             addToWatchList.setFocusPainted(false);
 
-            // Create a panel for buttons and add it to the movieEntry
+            // Create a panel for buttons and add it to the movieEntryPanel
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             buttonPanel.add(viewButton);
             buttonPanel.add(addToWatchList);
-            movieEntry.add(buttonPanel);
+            movieEntryPanel.add(buttonPanel, BorderLayout.EAST);
 
-            movieEntry.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Add space between lines
-
-            moviesPanel.add(movieEntry);
+            gbc.gridy++;
+            movieEntriesPanel.add(movieEntryPanel, gbc);
         }
+
+        moviesPanel.add(movieEntriesPanel, BorderLayout.NORTH);
 
         // Refresh the panel to reflect the changes
         moviesPanel.revalidate();
@@ -108,6 +129,47 @@ public class MoviesGUI extends JFrame {
     private void openWatchlist() {
         // Open the WatchlistGUI with the user's watchlist
         new WatchlistGUI(user);
+    }
+
+    private void displaySuccessMessage(String message) {
+        // Create a custom dialog with an "OK" button
+        JDialog dialog = new JDialog(this, "Success", true);
+        dialog.setLayout(new BorderLayout());
+
+        JLabel messageLabel = new JLabel(message);
+        messageLabel.setHorizontalAlignment(JLabel.CENTER);
+        dialog.add(messageLabel, BorderLayout.CENTER);
+
+        JButton okButton = new JButton("OK");
+
+        // Associate the "OK" button with the default button behavior
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+
+        // Set focus painted to false for the "OK" button
+        okButton.setFocusPainted(false);
+
+        // Add an Action to the "OK" button for Enter key press
+        okButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "OK");
+        okButton.getActionMap().put("OK", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                okButton.doClick();
+            }
+        });
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(okButton);
+
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+
+        dialog.setSize(300, 150);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
 }
