@@ -57,9 +57,15 @@ public class UserDataManagement {
     }
 
     public static int addUser(User person) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv",true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv", true))) {
             if (UserDataManagement.CheckDatabase(person)) {
                 throw new UsrExstException();
+            } else if (person.getUsername() == null || person.getUsername().length() < 3) {
+                throw new UsernameLengthException();
+            } else if (!Character.isAlphabetic(person.getUsername().charAt(0))) {
+                throw new InvalidUsernameException();
+            } else if (person.getPassword().length() < 8) {
+                throw new InvalidPasswordException();
             } else {
                 writer.write((person + "\n"));
                 return 1;
@@ -68,6 +74,12 @@ public class UserDataManagement {
             return -1;
         } catch (UsrExstException e) {
             return -2;
+        } catch (InvalidUsernameException iue) {
+            return -3;
+        } catch (UsernameLengthException ule) {
+            return -4;
+        } catch (InvalidPasswordException ipe) {
+            return -5;
         }
     }
 

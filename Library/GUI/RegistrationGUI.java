@@ -81,6 +81,12 @@ public class RegistrationGUI extends JFrame implements ActionListener {
             success.setText("Registered successfully!");
         } else if (UserDataManagement.addUser(newUser) == -1) {
             success.setText("Error:Couldn't add User");
+        } else if (UserDataManagement.addUser(newUser) == -3) {
+            success.setText("Username cannot start with non-alphabetic character");
+        } else if (UserDataManagement.addUser(newUser) == -4) {
+            success.setText("Username cannot contain less than three symbol");
+        } else if (UserDataManagement.addUser(newUser) == -5) {
+            success.setText("The length of the password cannot be less than 8!");
         } else {
             success.setText("Error:User already exist");
         }
