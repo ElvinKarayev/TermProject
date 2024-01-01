@@ -12,11 +12,11 @@ import Library.MovieData.Movie;
 import Library.MovieData.Watchlist;
 import Library.UserData.User;
 
-public class WatchlistGUI extends JFrame {
+public class WatchListGUI extends JFrame {
     private JPanel watchlistPanel;
     private User user; // Store the reference to the user
 
-    public WatchlistGUI(User user) {
+    public WatchListGUI(User user) {
         this.user = user; // Initialize the user reference
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -76,7 +76,6 @@ public class WatchlistGUI extends JFrame {
     }
 
     private List<Movie> sortWatchlist(String sortingCriteria) {
-        Watchlist watchlist = new Watchlist();
         List<Movie> movies = Watchlist.getWatchlist(user.getUsername());
 
         // Use Stream API for sorting based on the chosen criteria

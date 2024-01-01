@@ -128,7 +128,7 @@ public class MoviesGUI extends JFrame {
 
     private void openWatchlist() {
         // Open the WatchlistGUI with the user's watchlist
-        new WatchlistGUI(user);
+        new WatchListGUI(user);
     }
 
     private void displaySuccessMessage(String message) {
