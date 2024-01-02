@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+
 public class UserDataManagement {
 
     public static LinkedList<HashMap<String, String>> LoadFile() {
@@ -84,28 +85,17 @@ public class UserDataManagement {
     }
 
     public static boolean CheckDatabase(User e) {
-        int flag = 0;// to check whether true or false
-        LinkedList<HashMap<String, String>> Users;
-        Users = UserDataManagement.LoadFile();// loads all Users from database
-        for (HashMap<String, String> user : Users) {// checks whether username exist in the database or not
-            if (user.containsKey(e.getUsername())) {
-
-                flag++;
-                break;
-            }
-        }
-        return flag > 0 ? true : false;
+        LinkedList<HashMap<String, String>> users = UserDataManagement.LoadFile(); // loads all users from the database
+        return users.stream().anyMatch(user->user.containsKey(e.getUsername()));
     }
 
     public static void updateUserPassword(String new_pass, String username) {
 
         LinkedList<HashMap<String, String>> allUsersData = LoadFile();
-        for (HashMap<String, String> user : allUsersData) {
-            if (user.containsKey(username)) {
-                user.put(username, new_pass);
-                break;
-            }
-        }
+        allUsersData.stream()
+                    .filter(user -> user.containsKey(username))
+                    .findFirst()
+                    .ifPresent(user -> user.put(username, new_pass));
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv"))) {
             for (HashMap<String, String> user : allUsersData) {
                 String userInfo = user.keySet().iterator().next() + "," + user.values().iterator().next() + "\n";
