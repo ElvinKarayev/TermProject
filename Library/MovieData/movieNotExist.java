@@ -1,7 +1,7 @@
 package Library.MovieData;
 
-public class MovieNotExist extends Exception {
-    MovieNotExist() {
+public class movieNotExist extends Exception {
+    movieNotExist() {
         super();
     }
 }

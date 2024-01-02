@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import Library.UserData.User;
 import Library.UserData.UserDataManagement;
-import Library.UserData.UserNotFound;
+import Library.UserData.userNotFound;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -94,7 +94,7 @@ public class LoginGUI extends JFrame implements ActionListener {
             } else {
                 success.setText("Username or password is wrong!");
             }
-        } catch (UserNotFound ex) {
+        } catch (userNotFound ex) {
             success.setText("User not found!");
         }
     }

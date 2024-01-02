@@ -25,9 +25,9 @@ public class Watchlist {
                 if (MovieDatabase.movieExists(user_movie)) {
                     updateWatchlist(user, user_movie);
                 } else {
-                    throw new MovieNotExist();
+                    throw new movieNotExist();
                 }
-            } catch (MovieNotExist e) {
+            } catch (movieNotExist e) {
                 return -2;
             }
         }
