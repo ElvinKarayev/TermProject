@@ -76,7 +76,7 @@ public class RegistrationGUI extends JFrame implements ActionListener {
         char[] passwordCharacters = passwordField.getPassword();
         String password = new String(passwordCharacters);
 
-        // Create a new User object
+        // A new User object
         User newUser = new User(username, password);
 
         // Try to add the user to the database
