@@ -41,7 +41,7 @@ public class UserDataManagement {
 
     // will return the hashmap of the user if it is found otherwise it will throw
     // error
-    public static User getUser(String username) throws UserNotFound {
+    public static User getUser(String username) throws userNotFound {
 
         LinkedList<HashMap<String, String>> allUsersData = LoadFile();
 
@@ -53,13 +53,13 @@ public class UserDataManagement {
             }
         }
 
-        throw new UserNotFound();
+        throw new userNotFound();
     }
 
     public static int addUser(User person) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Resources/UserDataBase.csv", true))) {
             if (UserDataManagement.CheckDatabase(person)) {
-                throw new UsrExstException();
+                throw new usrExstException();
             } else if (person.getUsername() == null || person.getUsername().length() < 3) {
                 throw new UsernameLengthException();
             } else if (!Character.isAlphabetic(person.getUsername().charAt(0))) {
@@ -72,7 +72,7 @@ public class UserDataManagement {
             }
         } catch (IOException e) {
             return -1;
-        } catch (UsrExstException e) {
+        } catch (usrExstException e) {
             return -2;
         } catch (InvalidUsernameException iue) {
             return -3;
