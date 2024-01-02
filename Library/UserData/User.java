@@ -3,6 +3,7 @@ package Library.UserData;
 /**
  * Represents a user in the system. This class encapsulates user-related information 
  * and functionalities such as username, password, and other relevant attributes.
+ * @author Elvin Garayev
  */
 public class User {
     private String Username;

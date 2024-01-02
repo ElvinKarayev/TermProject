@@ -11,6 +11,7 @@ import java.util.LinkedList;
 /**
  * The {@code Watchlist} class represents a user's movie watchlist and provides methods for managing
  * movies in the watchlist, such as adding, removing, updating, and retrieving movie details.
+ * @author Elvin Garayev, Ramiz Mammadov
  */
 public class Watchlist {
     private static String pathToList = "./Resources/Watchlist.csv";

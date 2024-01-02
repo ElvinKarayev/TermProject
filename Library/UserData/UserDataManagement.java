@@ -12,6 +12,7 @@ import java.util.LinkedList;
 /**
  * Handles the management of user data, including operations such as loading and saving user information.
  * This class interacts with the data layer to perform CRUD (Create, Read, Update, Delete) operations for user entities.
+ * @author Elvin Garayev
  */
 public class UserDataManagement {
     /**

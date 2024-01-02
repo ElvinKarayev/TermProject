@@ -13,6 +13,7 @@ import java.util.*;
  *
  * This class is designed to handle basic movie database operations, including adding,
  * removing, and retrieving movie information.
+ *  @author Ramiz Mammadov
  */
 public class MovieDatabase {
     private static List<Movie> movies;
