@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Comparator;
 import java.util.List;
 
 import Library.MovieData.Movie;
@@ -35,6 +36,14 @@ public class MoviesGUI extends JFrame {
             }
         });
 
+        JButton sortButton = new JButton("Sort");
+        sortButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showSortingOptions();
+            }
+        });
+
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -47,10 +56,15 @@ public class MoviesGUI extends JFrame {
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
 
-        // Create a panel for the center containing the add movie button
+        // Create a panel for the center containing the add movie button and the sort
+        // button
+
         JPanel centerButtonPanel = new JPanel();
         centerButtonPanel.add(watchlistButton);
         watchlistButton.setFocusPainted(false);
+
+        centerButtonPanel.add(sortButton);
+        sortButton.setFocusPainted(false);
 
         // Create a panel for the right containing the logout button
         JPanel rightButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -191,6 +205,54 @@ public class MoviesGUI extends JFrame {
         dialog.setSize(300, 150);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+    }
+
+    private void showSortingOptions() {
+        // Create a dialog for sorting options
+        JDialog sortingDialog = new JDialog(this, "Sorting Options", true);
+        sortingDialog.setLayout(new FlowLayout());
+
+        // Create a dropdown for sorting criteria
+        String[] sortingOptions = { "Release Year", "Title", "Runtime" };
+        JComboBox<String> sortingComboBox = new JComboBox<>(sortingOptions);
+
+        JButton sortButton = new JButton("Sort");
+        sortButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sortMovies((String) sortingComboBox.getSelectedItem());
+                sortingDialog.dispose();
+            }
+        });
+
+        sortingDialog.add(new JLabel("Sort by: "));
+        sortingDialog.add(sortingComboBox);
+        sortingDialog.add(sortButton);
+
+        sortingDialog.setSize(300, 150);
+        sortingDialog.setLocationRelativeTo(this);
+        sortingDialog.setVisible(true);
+    }
+
+    private void sortMovies(String sortingCriteria) {
+        List<Movie> movies = MovieDatabase.getMovies();
+
+        // Use Stream API for sorting based on the chosen criteria
+        switch (sortingCriteria) {
+            case "Release Year":
+                // movies.sort(Comparator.comparing(Movie::getReleaseYear));
+                movies.sort(Comparator.comparing(Movie::getReleaseYear));
+                break;
+            case "Title":
+                movies.sort(Comparator.comparing(Movie::getTitle));
+                break;
+            case "Runtime":
+                movies.sort(Comparator.comparing(Movie::getRunningTime));
+                break;
+        }
+
+        // After updating the watchlist, display it again with the sorted movies
+        displayMovies();
     }
 
 }
