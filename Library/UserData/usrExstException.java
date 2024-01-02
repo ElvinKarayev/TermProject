@@ -1,7 +1,7 @@
 package Library.UserData;
 
-public class UsrExstException extends Error {
-    public UsrExstException() {
+public class usrExstException extends Error {
+    public usrExstException() {
         super();
     }
 }
