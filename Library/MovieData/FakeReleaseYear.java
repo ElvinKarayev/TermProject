@@ -1,7 +1,7 @@
-package Library.GUI;
+package Library.MovieData;
 
 public class FakeReleaseYear extends Exception {
-   public FakeReleaseYear(){
+    public FakeReleaseYear() {
         super();
     }
 }
