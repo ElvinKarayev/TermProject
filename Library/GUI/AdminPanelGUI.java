@@ -18,7 +18,7 @@ public class AdminPanelGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         moviesPanel = new JPanel();
-        moviesPanel.setLayout(new BoxLayout(moviesPanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
+        moviesPanel.setLayout(new BoxLayout(moviesPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(moviesPanel);
 
         JButton addButton = new JButton("Add Movie");
@@ -129,7 +129,7 @@ public class AdminPanelGUI extends JFrame {
             viewButton.setFocusPainted(false);
             deleteButton.setFocusPainted(false);
 
-            // Create a panel for buttons and add it to the movieEntryPanel
+            // A panel for buttons and add it to the movieEntryPanel
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             buttonPanel.add(viewButton);
             buttonPanel.add(deleteButton);
@@ -147,11 +147,11 @@ public class AdminPanelGUI extends JFrame {
     }
 
     private void showSortingOptions() {
-        // Create a dialog for sorting options
+        // A dialog for sorting options
         JDialog sortingDialog = new JDialog(this, "Sorting Options", true);
         sortingDialog.setLayout(new FlowLayout());
 
-        // Create a dropdown for sorting criteria
+        // a dropdown for sorting criteria
         String[] sortingOptions = { "Release Year", "Title", "Runtime" };
         JComboBox<String> sortingComboBox = new JComboBox<>(sortingOptions);
 

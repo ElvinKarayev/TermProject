@@ -24,7 +24,7 @@ public class MoviesGUI extends JFrame {
         setLocationRelativeTo(null);
 
         moviesPanel = new JPanel();
-        moviesPanel.setLayout(new BoxLayout(moviesPanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
+        moviesPanel.setLayout(new BoxLayout(moviesPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(moviesPanel);
 
         // Add a "Watchlist" button
@@ -72,7 +72,7 @@ public class MoviesGUI extends JFrame {
         leftButtonPanel.add(sortButton);
         sortButton.setFocusPainted(false);
 
-        // Add both left and right panels to the main button panel
+        // Add left, center, and right panels to the main button panel
         buttonPanel.add(centerButtonPanel, BorderLayout.CENTER);
         buttonPanel.add(rightButtonPanel, BorderLayout.AFTER_LINE_ENDS);
         buttonPanel.add(leftButtonPanel, BorderLayout.BEFORE_LINE_BEGINS);
@@ -123,13 +123,10 @@ public class MoviesGUI extends JFrame {
                     displayMovies();
 
                     if (result == -1) {
-                        // Movie has already been added
                         displaySuccessMessage("Movie has already been added to the watchlist.");
                     } else if (result == -2) {
-                        // Movie doesn't exist
                         displaySuccessMessage("Movie doesn't exist.");
                     } else if (result == 1) {
-                        // Movie added successfully
                         displaySuccessMessage("Movie added successfully");
                     }
                 }
@@ -146,7 +143,7 @@ public class MoviesGUI extends JFrame {
             viewButton.setFocusPainted(false);
             addToWatchList.setFocusPainted(false);
 
-            // Create a panel for buttons and add it to the movieEntryPanel
+            // A panel for buttons and add it to the movieEntryPanel
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             buttonPanel.add(viewButton);
             buttonPanel.add(addToWatchList);
@@ -169,7 +166,7 @@ public class MoviesGUI extends JFrame {
     }
 
     private void displaySuccessMessage(String message) {
-        // Create a custom dialog with an "OK" button
+        // A custom dialog with an "OK" button
         JDialog dialog = new JDialog(this, "Success", true);
         dialog.setLayout(new BorderLayout());
 
@@ -210,11 +207,11 @@ public class MoviesGUI extends JFrame {
     }
 
     private void showSortingOptions() {
-        // Create a dialog for sorting options
+        // A dialog for sorting options
         JDialog sortingDialog = new JDialog(this, "Sorting Options", true);
         sortingDialog.setLayout(new FlowLayout());
 
-        // Create a dropdown for sorting criteria
+        // A dropdown for sorting criteria
         String[] sortingOptions = { "Release Year", "Title", "Runtime" };
         JComboBox<String> sortingComboBox = new JComboBox<>(sortingOptions);
 
@@ -242,7 +239,6 @@ public class MoviesGUI extends JFrame {
         // Use Stream API for sorting based on the chosen criteria
         switch (sortingCriteria) {
             case "Release Year":
-                // movies.sort(Comparator.comparing(Movie::getReleaseYear));
                 movies.sort(Comparator.comparing(Movie::getReleaseYear));
                 break;
             case "Title":

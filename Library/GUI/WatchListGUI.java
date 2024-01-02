@@ -22,7 +22,7 @@ public class WatchListGUI extends JFrame {
         setLocationRelativeTo(null);
 
         watchlistPanel = new JPanel();
-        watchlistPanel.setLayout(new BoxLayout(watchlistPanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
+        watchlistPanel.setLayout(new BoxLayout(watchlistPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(watchlistPanel);
 
         JButton sortButton = new JButton("Sort");
@@ -47,11 +47,11 @@ public class WatchListGUI extends JFrame {
     }
 
     private void showSortingOptions() {
-        // Create a dialog for sorting options
+        // A dialog for sorting options
         JDialog sortingDialog = new JDialog(this, "Sorting Options", true);
         sortingDialog.setLayout(new FlowLayout());
 
-        // Create a dropdown for sorting criteria
+        // A dropdown for sorting criteria
         String[] sortingOptions = { "Release Year", "Title", "Runtime" };
         JComboBox<String> sortingComboBox = new JComboBox<>(sortingOptions);
 
@@ -80,7 +80,6 @@ public class WatchListGUI extends JFrame {
         // Use Stream API for sorting based on the chosen criteria
         switch (sortingCriteria) {
             case "Release Year":
-                // movies.sort(Comparator.comparing(Movie::getReleaseYear));
                 movies.sort(Comparator.comparing(Movie::getReleaseYear));
                 break;
             case "Title":
@@ -144,7 +143,7 @@ public class WatchListGUI extends JFrame {
             viewButton.setFocusPainted(false);
             removeButton.setFocusPainted(false);
 
-            // Create a panel for buttons and add it to the watchlistEntryPanel
+            // A panel for buttons and add it to the watchlistEntryPanel
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             buttonPanel.add(viewButton);
             buttonPanel.add(removeButton);
@@ -169,14 +168,13 @@ public class WatchListGUI extends JFrame {
         watchlistPanel.repaint();
     }
 
-    // Call this method initially to display the watchlist
     private void displayWatchlist() {
         List<Movie> userWatchlist = Watchlist.getWatchlist(user.getUsername());
         displayWatchlist(userWatchlist);
     }
 
     private void displayTotalWatchTime(int totalWatchTime) {
-        // Example: Display total watch time at the bottom of the panel
+        // Display total watch time at the bottom of the panel
         JLabel totalWatchTimeLabel = new JLabel("Total Watch Time: " + totalWatchTime + " minutes");
         totalWatchTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
