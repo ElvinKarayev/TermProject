@@ -51,22 +51,25 @@ public class AdminPanelGUI extends JFrame {
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
 
-        // Create a panel for the center containing the add movie button
+        // A panel for the center containing the add movie button
         JPanel centerButtonPanel = new JPanel();
         centerButtonPanel.add(addButton);
         addButton.setFocusPainted(false);
 
-        centerButtonPanel.add(sortButton);
-        sortButton.setFocusPainted(false);
-
-        // Create a panel for the right containing the logout button
+        // A panel for the right containing the logout button
         JPanel rightButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButtonPanel.add(logoutButton);
         logoutButton.setFocusPainted(false);
 
+        // A panel for the left containing the sort button
+        JPanel leftButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        leftButtonPanel.add(sortButton);
+        sortButton.setFocusPainted(false);
+
         // Add both left and right panels to the main button panel
         buttonPanel.add(centerButtonPanel, BorderLayout.CENTER);
         buttonPanel.add(rightButtonPanel, BorderLayout.AFTER_LINE_ENDS);
+        buttonPanel.add(leftButtonPanel, BorderLayout.BEFORE_LINE_BEGINS);
 
         this.add(buttonPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
