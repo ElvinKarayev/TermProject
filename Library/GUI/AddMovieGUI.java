@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Library.MovieData.FakeReleaseYear;
+import Library.MovieData.InvalidRunningTime;
 import Library.MovieData.Movie;
 import Library.MovieData.MovieDatabase;
 
@@ -95,10 +97,10 @@ public class AddMovieGUI extends JFrame implements ActionListener {
             String runningTime = runningTimeTextField.getText();
             int releaseYearValue = Integer.parseInt(releaseYear);
             int runningTimeValue = Integer.parseInt(runningTime);
-            if (releaseYearValue<1888){
+            if (releaseYearValue < 1888) {
                 throw new FakeReleaseYear();
             }
-            if(runningTimeValue<1){
+            if (runningTimeValue < 1) {
                 throw new InvalidRunningTime();
             }
             new MovieDatabase();
@@ -111,9 +113,9 @@ public class AddMovieGUI extends JFrame implements ActionListener {
             }
         } catch (NumberFormatException ex) {
             success.setText("Invalid input. Please enter valid integer values for Release Year and Running Time.");
-        } catch (FakeReleaseYear ex){
+        } catch (FakeReleaseYear ex) {
             success.setText("Release year can not be lower that 1888");
-        } catch (InvalidRunningTime ex){
+        } catch (InvalidRunningTime ex) {
             success.setText("running time can't be lower than 1 minute");
         }
     }

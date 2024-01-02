@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class WatchListGUI extends JFrame {
         sortingDialog.setLayout(new FlowLayout());
 
         // Create a dropdown for sorting criteria
-        String[] sortingOptions = { "Release Year", "Title" };
+        String[] sortingOptions = { "Release Year", "Title", "Runtime" };
         JComboBox<String> sortingComboBox = new JComboBox<>(sortingOptions);
 
         JButton sortButton = new JButton("Sort");
@@ -82,17 +81,13 @@ public class WatchListGUI extends JFrame {
         switch (sortingCriteria) {
             case "Release Year":
                 // movies.sort(Comparator.comparing(Movie::getReleaseYear));
-                Collections.sort(movies, new Comparator<Movie>() {
-
-                    @Override
-                    public int compare(Movie o1, Movie o2) {
-                        return o1.getReleaseYear() - o2.getReleaseYear();
-                    }
-
-                });
+                movies.sort(Comparator.comparing(Movie::getReleaseYear));
                 break;
             case "Title":
                 movies.sort(Comparator.comparing(Movie::getTitle));
+                break;
+            case "Runtime":
+                movies.sort(Comparator.comparing(Movie::getRunningTime));
                 break;
         }
 
