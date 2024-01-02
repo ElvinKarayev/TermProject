@@ -8,10 +8,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-
+/**
+ * The {@code Watchlist} class represents a user's movie watchlist and provides methods for managing
+ * movies in the watchlist, such as adding, removing, updating, and retrieving movie details.
+ */
 public class Watchlist {
     private static String pathToList = "./Resources/Watchlist.csv";
-
+    /**
+     * Adds a movie to the user's watchlist if it is not already in the list. Checks if the movie
+     * already exists in the user's watchlist and whether the movie is present in the main movie database.
+     *
+     * @param user      The username of the user.
+     * @param user_movie The Movie object representing the movie to add.
+     * @return 1 if the movie is added successfully, -1 if the movie is already in the watchlist,
+     *         or -2 if the movie does not exist in the main movie database.
+     */
     public static int addMovieToList(String user, Movie user_movie) {
         if (getWatchlist(user).contains(user_movie)) {
 
@@ -33,7 +44,12 @@ public class Watchlist {
         }
         return 1;
     }
-
+    /**
+     * Removes a movie from the user's watchlist.
+     *
+     * @param user  The username of the user.
+     * @param movie The Movie object representing the movie to remove.
+     */
     public static void removeMovieFromWatchlist(String user, Movie movie) {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(pathToList))) {
@@ -81,8 +97,13 @@ public class Watchlist {
         } catch (Exception e) {
         }
     }
-
-    public static void updateWatchlist(String user, Movie movie) {
+    /**
+     * Updates the user's watchlist with a new movie or adds a new entry if the user's watchlist does not exist.
+     *
+     * @param user  The username of the user.
+     * @param movie The Movie object representing the movie to update/add.
+     */
+    private static void updateWatchlist(String user, Movie movie) {
         ArrayList<String> lines = new ArrayList<>();
         boolean userFound = false;
 
@@ -117,7 +138,13 @@ public class Watchlist {
 
         }
     }
-
+    /**
+     * Retrieves the user's watchlist based on the provided username.
+     *
+     * @param user The username of the user.
+     * @return A LinkedList containing Movie objects representing the user's watchlist.
+     * @throws WatchlistNotExist If the watchlist does not exist for the provided user.
+     */
     public static LinkedList<Movie> getWatchlist(String user) {
         LinkedList<Movie> userWatchlist = new LinkedList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(pathToList))) {
