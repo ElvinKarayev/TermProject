@@ -21,8 +21,9 @@ public class RegistrationGUI extends JFrame implements ActionListener {
 
     public RegistrationGUI() {
         panel = new JPanel();
-        this.setSize(600, 600);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(300, 300);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         this.add(panel);
 
         panel.setLayout(null);
@@ -47,6 +48,7 @@ public class RegistrationGUI extends JFrame implements ActionListener {
         registerButton.setBounds(100, 80, 80, 25);
         registerButton.addActionListener(this);
         panel.add(registerButton);
+        this.getRootPane().setDefaultButton(registerButton);
 
         hasAccountButton = new JButton("Has account");
         hasAccountButton.setBounds(100, 150, 120, 25);
