@@ -55,6 +55,7 @@ public class RegistrationGUI extends JFrame implements ActionListener {
         hasAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 // Switch to the login window
                 new LoginGUI();
             }
