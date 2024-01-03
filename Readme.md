@@ -39,3 +39,6 @@ The Movie Library System is a comprehensive application designed to manage movie
 - then if you wish you can either view movies or add to watchlist
 - in the watchlist you can `delete` or `view` or even sort your movies based on `Running Time`, `Title`, `Release Year`
 - if you want to log out and log in with another account there is a button log out you can click to that and you will be redirected to the log in page
+
+## Link to the video
+- https://adauniversity-my.sharepoint.com/:v:/g/personal/rmammadov16266_ada_edu_az/EUlmKd5i6IFDr9pz4N7Iwy0BPUFWrRJf6ZUVREpytA_r5w?e=8SBydy
